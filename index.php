@@ -28,6 +28,17 @@ session_start();
 			filter:alpha(opacity=60);
 		}
 
+		.transbox2
+		{
+			background-color:#ffffff;
+			border:1px solid black;
+			opacity: 0.9;
+			filter:alpha(opacity=60);
+			width: 900px;
+			margin-top: 50px;
+
+		}
+
 		.transbox txt
 		{
 			
@@ -38,12 +49,24 @@ session_start();
 			text-align: left;
 		}
 
+
+		.txc
+		{
+			text-align: center;
+			font-weight:bold;
+		}
+
 		.center 
 		{
 			position:absolute; 
 			top:50%; 
 			left:50%; 
 			margin:-100px 0px 0px -150px;
+		}
+
+		.v_align
+		{
+			vertical-align: middle;
 		}
 		
 
@@ -55,53 +78,10 @@ session_start();
 <body>
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script>
-		$(document).ready(function(){
-		
-		var ajax_common = function(data,url,type,obj){
-			$.ajax({
-				url : url,
-				data : data,
-				type : type,
-				success : function(response){
-					$(obj).html(response);
-				}
-			});
-		};
-
-		$(".login_enter").click(function(event){
-			event.preventDefault();
-			var userid = $(".user").val();
-			var pswid = $(".psw").val();
-			chk_login("login",userid,pswid);
-			
-		});
-
-		var chk_login = function(type,id,pswd){
-			var data = {"condition" : type , "user" : id , "pass" : pswd};
-			ajax_common(data,"function.php","POST",$(".main_body"));
-		};
-
-		$(".video_link").click(function(event){
-			event.preventDefault();
-			var link_vdo = $(this).children(".link_tag").val();
-			
-			vdo_click("vdo",link_vdo);
-			
-		});
-
-		var vdo_click = function(type,link_vdo){
-			var data = {"condition" : type , "link_vdo" : link_vdo };
-			ajax_common(data,"function.php","POST",$(".main_body"));
-		};
-		
-
-		});
-
-	</script>
-	
+	<script src="js/javascript.js"></script>	
 	<?
 	require_once('function.php');
+	require_once('dbo.php');
 	?>
 		<div class='center main_body'>
 			<?
