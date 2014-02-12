@@ -20,7 +20,7 @@ $(document).ready(function(){
 		});
 
 		var chk_login = function(type,id,pswd){
-			var data = {"condition" : type , "user" : id , "pass" : pswd};
+			var data = {"condition" : type , "userr" : id , "pass" : pswd};
 			ajax_common(data,"function.php","POST",$(".main_body"));
 		};
 
@@ -41,7 +41,6 @@ $(document).ready(function(){
 			event.preventDefault();
 			var value_check = $(this).val();
 			var checked_attr = $(this).is(':checked');
-
 			gift_check("gift_check",value_check,checked_attr)
 			
 			});
@@ -65,5 +64,42 @@ $(document).ready(function(){
 			ajax_common(data,"function.php","POST",$(".main_body"));
 		};
 
+		$(".delete_fr").click(function(event){
+			event.preventDefault();
+			var del_val = $(this).children(".val_del").val();
+			
+			alert();
+			delete_user("del_user",del_val);
+			
+			});
 
+		var delete_user = function(type,del_val){
+			var data = {"condition" : type , "del_val" : del_val };
+			ajax_common(data,"function.php","POST",$(".main_body"));
+		};
+
+		$(".register_id").click(function(event){
+			event.preventDefault();
+			link_regis("register");
+			
+			});
+
+		var link_regis = function(type){
+			var data = {"condition" : type};
+			ajax_common(data,"function.php","POST",$(".main_body"));
+		};
+
+		$(".sub_regis").click(function(event){
+			event.preventDefault();
+			var user_regis = $("#user_regis").val();
+			var pass_regis = $("#pass_regis").val();
+			var pss_con = $("#con_pass_regis").val();
+			regis("register_form",user_regis,pass_regis,pss_con);
+			});
+
+		var regis = function(type,use,psw,con){
+			var data = {"condition" : type , "user" : use , "con" : con , "psw" : psw};
+			ajax_common(data,"function.php","POST",$(".main_body"));
+		};
+		
 		});

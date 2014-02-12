@@ -3899,6 +3899,14 @@ input[type="submit"].btn.btn-mini {
   right: -21px;
   line-height: 20px;
 }
+.alert-newfriend{
+  color:#68228B;
+  background-color:#FFBBFF;
+  border-color:#CD96CD;
+}
+.alert-newfriend h4 {
+  color: #68228B;
+}
 
 .alert-success {
   color: #468847;

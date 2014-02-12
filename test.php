@@ -29,12 +29,15 @@ div.transbox p
 
 <body>
 <?
-$ddd = opendir('image/');
 
-while ($dd = readdir($ddd)){
-echo $dd."<br>";
+$arr = array(1, 2, 3, 4);
 
-}
+$arr = array();
+
+print_r($arr);
+// $arr is now array(2, 4, 6, 8)
+unset($value); // break the reference with the last element
+
 ?>
 </body>
 </html>

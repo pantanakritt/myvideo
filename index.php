@@ -4,6 +4,7 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -11,8 +12,11 @@ session_start();
 	<style>
 
 		body {
-			background-image:url('image/cia.jpg');
-			background-size: 100%;
+			background-image:url('image/img2.jpg');
+			background-size: 120%;
+			background-repeat:no-repeat;
+			background-attachment:fixed;
+			
 		}
 
 		table.login{
@@ -32,9 +36,25 @@ session_start();
 		{
 			background-color:#ffffff;
 			border:1px solid black;
-			opacity: 0.9;
+			opacity: 1;
 			filter:alpha(opacity=60);
 			width: 900px;
+			margin-top: 50px;
+
+		}
+		.chk_gift_body{
+			background-color:#ffffff;
+			width: 900px;
+			margin-top: 50px;
+		}
+
+		.transbox3
+		{
+			background-color:#ffffff;
+			border:1px solid black;
+			opacity: 0.95;
+			filter:alpha(opacity=60);
+			width: 400px;
 			margin-top: 50px;
 
 		}
@@ -72,6 +92,7 @@ session_start();
 
 
 	</style>
+	<title>Brave Frontier Checker</title>
 	
 </head>
 
@@ -80,6 +101,7 @@ session_start();
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/javascript.js"></script>	
 	<?
+	date_default_timezone_set('Asia/Bangkok');
 	require_once('function.php');
 	require_once('dbo.php');
 	?>
