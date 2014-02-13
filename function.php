@@ -1,5 +1,6 @@
 <?
 session_start();
+date_default_timezone_set('Asia/Bangkok');
 
 require_once("dbo.php");
 function video_tag($link){
@@ -101,7 +102,10 @@ function chk_login(){
 		$_SESSION[session_usr] = "chkbf";		
 		if (!isset($_SESSION[u_info])){
 			$fetch_uname = mysql_fetch_array($qry_name);
+			$_SESSION[last_login] = $fetch_uname[last_log];
 			$_SESSION[u_info] = $fetch_uname[uid]."-".$fetch_uname[uname]."-".$fetch_uname[upsw];
+			//date_default_timezone_set('Asia/Bangkok');
+			mysql_query("UPDATE user_login SET last_log = '".date("dmyHi")."' WHERE uid = '".$fetch_uname[uid]."'");
 		}
 		echo "<script>window.location.href = 'index.php';</script>";
 	}
@@ -142,7 +146,7 @@ function update_gift_check($c_name,$chk_attr){
 		
 		if($num_qry1>0&&$fetch_qry1[hour]=="99"){
 			//echo "<br>if Ture";
-			mysql_query("UPDATE day_table SET date_hour = '".date("h")."',date_min = '".date("m")."' WHERE date_time='".date("ymd")."' && c_name='".$c_name."'  && uid='$name_info[0]'");
+			mysql_query("UPDATE day_table SET date_hour = '".date("h")."',date_min = '".date("i")."' WHERE date_time='".date("ymd")."' && c_name='".$c_name."'  && uid='$name_info[0]'");
 			mysql_query("UPDATE name_table SET rank = 'z' WHERE c_name = '$c_name'  && uid='$name_info[0]'");
 		}
 		else {
@@ -266,6 +270,7 @@ function chk_day_send($day_send){
 }
 
 function chk_gift_form(){
+	date_default_timezone_set('Asia/Bangkok');
 	$name_info = explode("-", $_SESSION[u_info]);
 	?>
 
@@ -274,7 +279,7 @@ function chk_gift_form(){
 				$('.main_body').attr('align','center');
 				</script>
 
-				<div class='chk_gift_body'>
+				<div class='chk_gift_body table-bordered'>
 					<center><table class='table table-bordered'>
 						<tr>
 							<td class='txc' colspan='2'><div align='right'><br>
@@ -282,6 +287,12 @@ function chk_gift_form(){
 							if(isset($_SESSION[session_usr])){
 							echo "&nbsp;&nbsp;<a href='log_out.php'>Log Out</a>";
 								}
+							?><br>Last log in 
+							<? 
+							$last_log_split = str_split($_SESSION[last_login],2);
+							//print_r($last_log_split);
+							//date_default_timezone_set('Asia/Bangkok');
+							echo date("d M Y H:i",mktime($last_log_split[3],$last_log_split[4],0,$last_log_split[1],$last_log_split[0],$last_log_split[2]));
 							?>
 							<br><br></div></td>
 							
@@ -323,7 +334,7 @@ function chk_gift_form(){
 											echo "<a href='#' class='delete_fr'><input type='hidden' class='val_del' value='".$fetch[c_name]."-".$name_info[0]."'><i class='icon-trash'></i></a>";
 										echo "</td>";
 										echo "<td class='txc'>";
-											echo $fetch[name];
+											echo "<p class='v_align'>".$fetch[name]."</p>";
 										
 										$query_chk_name = mysql_query("SELECT * FROM day_table WHERE c_name = '$fetch[c_name]' && uid='$name_info[0]'");
 										$num_row_query_chk_name = mysql_num_rows($query_chk_name);
@@ -341,6 +352,7 @@ function chk_gift_form(){
 										echo "<br>Day as friend : ".cal_fr($fetch[first_add])."</td>";
 										echo "<td>";
 
+
 										for($num_name = 0 ; $num_name < $num_row_query_chk_name ; $num_name++){
 											$query_chk_name_fetch = mysql_fetch_array($query_chk_name);
 											if ($date_now-1==$query_chk_name_fetch[date_time]&&$query_chk_name_fetch[date_hour]!="99"){
@@ -355,8 +367,9 @@ function chk_gift_form(){
 											else if($date_now==$query_chk_name_fetch[date_time]&&$query_chk_name_fetch[date_hour]!="99"){
 												$day_check +=1;
 												$dontsendgift[0] = "SEND";
-												if($query_chk_name_fetch[date_hour]=="99")
+												if($query_chk_name_fetch[date_hour]=="99"){
 												$day_now = FALSE;
+												}
 												else {
 													$day_now = TRUE;
 												}
@@ -444,7 +457,7 @@ function register_form(){
 			<tr><td>Username</td><td><input type='text' placeholder='Type your username' id='user_regis'></td>
 			<tr><td>password</td><td><input type='password' id='pass_regis'></td></tr>
 			<tr><td>confirm password</td><td><input type='password' id='con_pass_regis'></td>
-			<tr><td colspan='2'><center><input type='button' value='Register'class='sub_regis'></td>
+			<tr><td colspan='2'><center><input type='button' value='Register'class='sub_regis'>&nbsp;&nbsp;&nbsp;<a href='log_out.php'><input type='button' value='Cancel'></a></td>
 		</table>
 		</form>
 	</div>
@@ -496,7 +509,7 @@ else if($_POST[condition]=="del_user"){
 }
 
 else if($_POST[condition]=="register"){
-	register_form();
+	echo "<script>window.location.href='index.php?regis_ter=1';</script>";
 }
 else if($_POST[condition]=="register_form"){
 	session_destroy();

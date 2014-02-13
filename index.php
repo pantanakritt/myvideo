@@ -1,5 +1,6 @@
 <?
 session_start();
+date_default_timezone_set('Asia/Bangkok');
 ?>
 <!DOCTYPE html>
 <html>
@@ -7,8 +8,8 @@ session_start();
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+	<link rel="shortcut icon" href="favicon.ico" />
 	<style>
 
 		body {
@@ -86,7 +87,7 @@ session_start();
 
 		.v_align
 		{
-			vertical-align: middle;
+			vertical-align: 50px;
 		}
 		
 
@@ -101,19 +102,26 @@ session_start();
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/javascript.js"></script>	
 	<?
-	date_default_timezone_set('Asia/Bangkok');
+	
 	require_once('function.php');
 	require_once('dbo.php');
 	?>
 		<div class='center main_body'>
-			<?
+		<?
 			if(isset($_SESSION[session_usr])){
 				chk_login();
+			}
+			else if($_GET[regis_ter]==1){
+				register_form();
 			}
 			else {
 			log_in();
 			}
-			?>
+
+		?>
+		
+		
+
 
 		</div>
 
